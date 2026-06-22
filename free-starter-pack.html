@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Four ready-to-run workplace trivia rounds from Workday Trivia." />
+  <title>Workday Trivia | Free 4-Round Starter Pack</title>
+  <style>
+    :root { --ink:#172033; --navy:#17396f; --navy2:#0d2143; --gold:#f7c843; --paper:#f6f8fc; --muted:#667085; --line:#dde4f0; --green:#0f8a57; }
+    * { box-sizing:border-box; }
+    html,body { min-height:100%; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--ink); background:var(--paper); }
+    .topbar { min-height:68px; padding:14px 22px; display:flex; align-items:center; justify-content:space-between; gap:16px; background:#fff; border-bottom:1px solid var(--line); }
+    .brand { font-weight:800; letter-spacing:-.02em; }
+    .brand small { display:block; margin-top:2px; color:var(--muted); font-weight:700; letter-spacing:0; font-size:.72rem; }
+    .back { color:var(--navy); text-decoration:none; font-weight:800; font-size:.92rem; }
+    .deck-wrap { width:min(1120px, calc(100% - 32px)); margin:28px auto 44px; }
+    .deck { position:relative; overflow:hidden; min-height:610px; border-radius:28px; background:linear-gradient(145deg,var(--navy),var(--navy2)); color:#fff; box-shadow:0 24px 70px rgba(16,40,79,.2); }
+    .progress { position:absolute; left:0; top:0; height:6px; width:100%; background:rgba(255,255,255,.15); }
+    .progress > span { display:block; height:100%; background:var(--gold); transition:width .25s ease; }
+    .slide { min-height:610px; padding:58px clamp(28px,7vw,86px) 114px; display:flex; flex-direction:column; justify-content:center; }
+    .eyebrow { margin:0 0 12px; color:var(--gold); text-transform:uppercase; letter-spacing:.14em; font-size:.78rem; font-weight:900; }
+    .slide h1,.slide h2 { margin:0; line-height:1.05; letter-spacing:-.055em; }
+    .slide h1 { max-width:780px; font-size:clamp(2.7rem,7vw,5.7rem); }
+    .slide h2 { max-width:900px; font-size:clamp(2.1rem,5vw,4.4rem); }
+    .lead { max-width:720px; margin:24px 0 0; color:rgba(255,255,255,.86); font-size:clamp(1.04rem,2vw,1.34rem); line-height:1.55; }
+    .meta { margin-top:30px; display:flex; flex-wrap:wrap; gap:10px; }
+    .pill { padding:8px 11px; border:1px solid rgba(255,255,255,.24); border-radius:999px; background:rgba(255,255,255,.08); font-size:.85rem; font-weight:800; }
+    .round-number { display:inline-grid; place-items:center; width:68px; height:68px; margin-bottom:24px; border-radius:20px; background:var(--gold); color:var(--ink); font-size:1.5rem; font-weight:900; }
+    .choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:34px; max-width:940px; }
+    .choice { min-height:82px; padding:20px; display:flex; align-items:center; gap:12px; border:1px solid rgba(255,255,255,.22); border-radius:18px; background:rgba(255,255,255,.08); font-size:clamp(1rem,2vw,1.22rem); font-weight:800; }
+    .choice-label { display:inline-grid; place-items:center; min-width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,.17); font-size:.84rem; }
+    .answer-card { max-width:900px; margin-top:28px; padding:28px; border-radius:22px; background:#fff; color:var(--ink); }
+    .answer-label { margin:0 0 8px; color:var(--green); font-weight:900; text-transform:uppercase; letter-spacing:.1em; font-size:.78rem; }
+    .answer { margin:0; font-size:clamp(1.5rem,4vw,2.7rem); font-weight:900; line-height:1.15; letter-spacing:-.04em; }
+    .fact { margin:12px 0 0; color:#485568; font-size:1.08rem; line-height:1.55; }
+    .tiebreaker { max-width:900px; margin-top:26px; padding:28px; border:2px solid var(--gold); border-radius:22px; background:rgba(255,255,255,.08); }
+    .tiebreaker p { margin:0; font-size:clamp(1.3rem,3.4vw,2.35rem); line-height:1.2; font-weight:900; letter-spacing:-.04em; }
+    .note { max-width:760px; margin-top:25px; color:rgba(255,255,255,.78); font-size:1rem; line-height:1.55; }
+    .controls { position:absolute; left:0; right:0; bottom:0; padding:20px clamp(22px,5vw,48px); display:flex; justify-content:space-between; align-items:center; gap:18px; background:linear-gradient(transparent,rgba(0,0,0,.35)); }
+    .count { color:rgba(255,255,255,.76); font-size:.9rem; font-weight:800; }
+    .buttons { display:flex; gap:10px; }
+    button { border:0; border-radius:999px; padding:12px 17px; cursor:pointer; font:inherit; font-weight:900; }
+    .quiet { background:rgba(255,255,255,.13); color:#fff; border:1px solid rgba(255,255,255,.25); }
+    .next { background:var(--gold); color:var(--ink); }
+    .guide { width:min(1120px, calc(100% - 32px)); margin:0 auto 68px; padding:42px; border-radius:24px; background:#fff; box-shadow:0 12px 36px rgba(16,40,79,.07); }
+    .guide h2 { margin:0 0 9px; letter-spacing:-.04em; font-size:2rem; }
+    .guide-intro { margin:0 0 26px; color:var(--muted); max-width:800px; }
+    .guide-actions { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:26px; }
+    .guide-actions button { background:var(--navy); color:#fff; }
+    .guide-actions .outline { color:var(--navy); background:#fff; border:1px solid #b7c7e6; }
+    .round-guide { padding:26px 0; border-top:1px solid var(--line); }
+    .round-guide h3 { margin:0 0 12px; font-size:1.35rem; }
+    .qa { display:grid; grid-template-columns:1fr auto; gap:18px; padding:13px 0; border-top:1px solid #edf1f7; }
+    .qa:first-of-type { border-top:0; }
+    .question { font-weight:800; line-height:1.45; }
+    .guide-answer { text-align:right; color:var(--green); font-weight:900; }
+    .scorecard { margin-top:28px; overflow:auto; }
+    table { width:100%; min-width:640px; border-collapse:collapse; }
+    th,td { border:1px solid #cbd5e1; padding:11px; text-align:left; }
+    th { background:#eff4ff; }
+    td { height:38px; }
+    .print-note { margin:20px 0 0; color:var(--muted); font-size:.92rem; }
+    @media (max-width:720px) { .topbar { align-items:flex-start; flex-direction:column; } .deck { min-height:650px; } .slide { min-height:650px; padding-bottom:126px; } .choices { grid-template-columns:1fr; } .guide { padding:26px 20px; } .qa { grid-template-columns:1fr; gap:5px; } .guide-answer { text-align:left; } }
+    @media print { body { background:#fff; } .topbar,.deck-wrap,.guide-actions,.print-note { display:none !important; } .guide { display:block; width:100%; margin:0; padding:0; box-shadow:none; border-radius:0; } .round-guide { break-inside:avoid; } .scorecard { break-inside:avoid; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Workday Trivia<small>Free 4-Round Starter Pack</small></div>
+    <a class="back" href="index.html">← Back to Workday Trivia</a>
+  </header>
+
+  <main>
+    <section class="deck-wrap" aria-label="Workday Trivia slide deck">
+      <div class="deck" id="deck">
+        <div class="progress"><span id="progressBar"></span></div>
+        <div class="slide" id="slide"></div>
+        <div class="controls">
+          <div class="count" id="count"></div>
+          <div class="buttons">
+            <button class="quiet" id="prevButton" type="button">← Back</button>
+            <button class="next" id="nextButton" type="button">Next →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide" id="guide">
+      <h2>Host Guide + Answer Key</h2>
+      <p class="guide-intro">Use the deck for a quick screen-share activity, or print this guide and hand out answer sheets. Each round is five questions plus a tie-breaker. Aim for about five minutes per round.</p>
+      <div class="guide-actions">
+        <button type="button" onclick="window.print()">Print / Save as PDF</button>
+        <button class="outline" type="button" onclick="document.getElementById('deck').scrollIntoView({behavior:'smooth'})">Return to presenter deck</button>
+      </div>
+      <div id="guideContent"></div>
+      <div class="scorecard">
+        <h3>Simple Team Score Sheet</h3>
+        <table>
+          <thead><tr><th>Team</th><th>Round 1</th><th>Round 2</th><th>Round 3</th><th>Round 4</th><th>Total</th></tr></thead>
+          <tbody>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="print-note">Tip: In your browser print dialog, choose “Save as PDF” to keep a printable copy. This free pack is separate from the future 52-week paid collection, so buyers will receive 52 additional rounds rather than repeats.</p>
+    </section>
+  </main>
+
+  <script>
+    const rounds = [
+      {
+        title: 'Quick Thinking',
+        subtitle: 'A low-pressure warm-up that gets everyone talking.',
+        questions: [
+          { q: 'How many sides does an octagon have?', c: ['6','7','8','10'], a: 2, fact: '“Octa” means eight, which is also why an octopus has eight arms.' },
+          { q: 'Which of these numbers is prime?', c: ['21','27','29','33'], a: 2, fact: 'A prime number has exactly two positive factors: 1 and itself.' },
+          { q: 'In a standard deck of cards, excluding jokers, how many cards are there?', c: ['48','50','52','54'], a: 2, fact: 'A standard deck has four suits with 13 cards in each suit.' },
+          { q: 'Which spelling is correct?', c: ['Seperate','Separate','Seperrate','Separete'], a: 1, fact: 'A common memory trick: there is “a rat” in sep-a-rat-e.' },
+          { q: 'What is one quarter of 1,000?', c: ['100','200','250','400'], a: 2, fact: 'One quarter is the same as dividing by four.' }
+        ],
+        tie: { q: 'Tie-breaker: How many total squares are on a standard chessboard?', a: '64', fact: 'A standard chessboard is 8 by 8.' }
+      },
+      {
+        title: 'Food & Everyday Science',
+        subtitle: 'Familiar facts with just enough thinking required.',
+        questions: [
+          { q: 'Which gas do plants take from the air for photosynthesis?', c: ['Oxygen','Carbon dioxide','Nitrogen','Helium'], a: 1, fact: 'Plants use carbon dioxide, water, and sunlight to make sugars; oxygen is released in the process.' },
+          { q: 'Which fruit is dried to make raisins?', c: ['Plum','Grape','Fig','Apricot'], a: 1, fact: 'Raisins are dried grapes, and drying concentrates their natural sweetness.' },
+          { q: 'What is the largest organ in the human body?', c: ['Liver','Heart','Skin','Lungs'], a: 2, fact: 'Skin helps protect the body, regulate temperature, and sense the world around us.' },
+          { q: 'What does H₂O represent?', c: ['Hydrogen peroxide','Salt','Water','Oxygen'], a: 2, fact: 'Each water molecule has two hydrogen atoms and one oxygen atom.' },
+          { q: 'Which spice comes from the inner bark of certain trees?', c: ['Paprika','Cinnamon','Turmeric','Nutmeg'], a: 1, fact: 'Cinnamon is commonly sold as rolled bark sticks or as ground powder.' }
+        ],
+        tie: { q: 'Tie-breaker: At sea level, what is the freezing point of water in Fahrenheit?', a: '32°F', fact: 'Water freezes at 0°C and 32°F under standard conditions.' }
+      },
+      {
+        title: 'Around the Map',
+        subtitle: 'A quick trip around the world with no passport required.',
+        questions: [
+          { q: 'Which ocean is the largest?', c: ['Atlantic','Indian','Arctic','Pacific'], a: 3, fact: 'The Pacific Ocean covers more area than all the land on Earth combined.' },
+          { q: 'Which country is commonly described as being shaped like a boot?', c: ['Spain','Italy','Greece','Portugal'], a: 1, fact: 'Italy’s “boot” shape is one of the best-known country outlines in the world.' },
+          { q: 'What is the capital of Australia?', c: ['Sydney','Melbourne','Canberra','Perth'], a: 2, fact: 'Canberra was selected as a compromise between Sydney and Melbourne.' },
+          { q: 'Which U.S. state is known as the Aloha State?', c: ['Florida','Alaska','Hawaii','California'], a: 2, fact: 'Hawaii is the only U.S. state made entirely of islands.' },
+          { q: 'In which city would you find the Eiffel Tower?', c: ['Paris','Rome','London','Brussels'], a: 0, fact: 'The Eiffel Tower was completed in 1889 for the Paris World’s Fair.' }
+        ],
+        tie: { q: 'Tie-breaker: How many states are in the United States?', a: '50', fact: 'The 50th state, Hawaii, joined the Union in 1959.' }
+      },
+      {
+        title: 'Play, Screen & Culture',
+        subtitle: 'Workplace-safe familiar favorites.',
+        questions: [
+          { q: 'In chess, which piece moves in an L shape?', c: ['Bishop','Knight','Rook','Queen'], a: 1, fact: 'The knight is the only chess piece that can jump over other pieces.' },
+          { q: 'What board game includes properties such as Boardwalk?', c: ['Clue','Risk','Monopoly','Scrabble'], a: 2, fact: 'Boardwalk and Park Place are the famous dark-blue properties in the standard U.S. version.' },
+          { q: 'What do the letters “QR” in QR code stand for?', c: ['Quick Response','Quality Reader','Quiet Route','Query Record'], a: 0, fact: 'QR codes were originally developed to track automotive parts quickly.' },
+          { q: 'What is the name for a series of three movies?', c: ['Duet','Trilogy','Quartet','Saga'], a: 1, fact: 'A trilogy is a three-part series; a tetralogy has four parts.' },
+          { q: 'In bowling, what is it called when all ten pins fall on the first roll of a frame?', c: ['Spare','Strike','Sweep','Perfect'], a: 1, fact: 'A strike is marked with an X on a standard bowling score sheet.' }
+        ],
+        tie: { q: 'Tie-breaker: How many keys are on a standard full-size piano?', a: '88', fact: 'A standard piano has 52 white keys and 36 black keys.' }
+      }
+    ];
+
+    const slides = [
+      { type:'cover' },
+      { type:'howto' },
+      ...rounds.flatMap((round, roundIndex) => [
+        { type:'round', round, roundIndex },
+        ...round.questions.flatMap((question, questionIndex) => [
+          { type:'question', round, roundIndex, question, questionIndex },
+          { type:'answer', round, roundIndex, question, questionIndex }
+        ]),
+        { type:'tie', round, roundIndex },
+        { type:'tieAnswer', round, roundIndex }
+      ]),
+      { type:'end' }
+    ];
+
+    let current = 0;
+    const slideEl = document.getElementById('slide');
+    const countEl = document.getElementById('count');
+    const progressEl = document.getElementById('progressBar');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+
+    function letter(index) { return String.fromCharCode(65 + index); }
+    function escapeHtml(text) { return text.replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'})[char]); }
+
+    function renderSlide() {
+      const item = slides[current];
+      let html = '';
+      if (item.type === 'cover') {
+        html = `<p class="eyebrow">Free 4-Round Starter Pack</p><h1>Ready-to-run trivia for meetings that need a little energy.</h1><p class="lead">Four workplace-safe rounds. Twenty questions. No prep required. Use the arrows below or your keyboard to present.</p><div class="meta"><span class="pill">4 rounds</span><span class="pill">5 questions each</span><span class="pill">Host guide included</span><span class="pill">Print / save as PDF</span></div>`;
+      } else if (item.type === 'howto') {
+        html = `<p class="eyebrow">How to run it</p><h2>Make it easy on yourself.</h2><p class="lead">Split the room into teams, read each question, allow about 20–30 seconds, then reveal the answer. One point per correct answer. Use the tie-breaker only if you need it.</p><div class="meta"><span class="pill">Arrow keys work</span><span class="pill">Answers are on separate slides</span><span class="pill">Works on screen share</span></div><p class="note">For an in-person setup, scroll below the deck and print the Host Guide + Answer Key.</p>`;
+      } else if (item.type === 'round') {
+        html = `<div class="round-number">${item.roundIndex + 1}</div><p class="eyebrow">Round ${item.roundIndex + 1} of 4</p><h1>${escapeHtml(item.round.title)}</h1><p class="lead">${escapeHtml(item.round.subtitle)}</p><div class="meta"><span class="pill">Five questions</span><span class="pill">One point each</span><span class="pill">Tie-breaker ready</span></div>`;
+      } else if (item.type === 'question') {
+        const q = item.question;
+        html = `<p class="eyebrow">${escapeHtml(item.round.title)} · Question ${item.questionIndex + 1} of 5</p><h2>${escapeHtml(q.q)}</h2><div class="choices">${q.c.map((choice, i) => `<div class="choice"><span class="choice-label">${letter(i)}</span>${escapeHtml(choice)}</div>`).join('')}</div><p class="note">Let teams lock in an answer before moving forward.</p>`;
+      } else if (item.type === 'answer') {
+        const q = item.question;
+        html = `<p class="eyebrow">${escapeHtml(item.round.title)} · Answer ${item.questionIndex + 1}</p><div class="answer-card"><p class="answer-label">Correct answer</p><p class="answer">${letter(q.a)}. ${escapeHtml(q.c[q.a])}</p><p class="fact">${escapeHtml(q.fact)}</p></div><p class="note">Award one point for each correct answer.</p>`;
+      } else if (item.type === 'tie') {
+        html = `<p class="eyebrow">${escapeHtml(item.round.title)} · Tie-breaker</p><h2>Closest answer wins.</h2><div class="tiebreaker"><p>${escapeHtml(item.round.tie.q)}</p></div><p class="note">Have teams write down one number. No going over rule is optional.</p>`;
+      } else if (item.type === 'tieAnswer') {
+        html = `<p class="eyebrow">${escapeHtml(item.round.title)} · Tie-breaker Answer</p><div class="answer-card"><p class="answer-label">Correct answer</p><p class="answer">${escapeHtml(item.round.tie.a)}</p><p class="fact">${escapeHtml(item.round.tie.fact)}</p></div>`;
+      } else if (item.type === 'end') {
+        html = `<p class="eyebrow">That’s the starter pack</p><h1>Four free rounds. Zero repeats in the future 52-week collection.</h1><p class="lead">This pack is intentionally separate from the paid Year Edition. When the full collection launches, it will contain 52 additional weekly rounds.</p><div class="meta"><span class="pill">Screen-ready</span><span class="pill">Host guide</span><span class="pill">Built for busy leaders</span></div><p class="note">Return to the Workday Trivia home page for product updates.</p>`;
+      }
+      slideEl.innerHTML = html;
+      countEl.textContent = `${current + 1} of ${slides.length}`;
+      progressEl.style.width = `${((current + 1) / slides.length) * 100}%`;
+      prevButton.disabled = current === 0;
+      nextButton.textContent = current === slides.length - 1 ? 'Start over ↺' : 'Next →';
+    }
+
+    function move(direction) {
+      if (direction > 0 && current === slides.length - 1) current = 0;
+      else current = Math.max(0, Math.min(slides.length - 1, current + direction));
+      renderSlide();
+    }
+
+    prevButton.addEventListener('click', () => move(-1));
+    nextButton.addEventListener('click', () => move(1));
+    document.addEventListener('keydown', event => {
+      if (['ArrowRight',' ','Enter'].includes(event.key)) { event.preventDefault(); move(1); }
+      if (event.key === 'ArrowLeft') { event.preventDefault(); move(-1); }
+    });
+
+    function renderGuide() {
+      document.getElementById('guideContent').innerHTML = rounds.map((round, roundIndex) => `
+        <section class="round-guide">
+          <h3>Round ${roundIndex + 1}: ${escapeHtml(round.title)}</h3>
+          ${round.questions.map((q, qIndex) => `<div class="qa"><div><div class="question">${qIndex + 1}. ${escapeHtml(q.q)}</div><div style="margin-top:4px;color:#667085">${escapeHtml(q.c.map((choice,i)=>`${letter(i)}. ${choice}`).join(' · '))}</div></div><div class="guide-answer">${letter(q.a)}. ${escapeHtml(q.c[q.a])}</div></div>`).join('')}
+          <div class="qa"><div><div class="question">Tie-breaker: ${escapeHtml(round.tie.q)}</div></div><div class="guide-answer">${escapeHtml(round.tie.a)}</div></div>
+        </section>
+      `).join('');
+    }
+
+    renderSlide();
+    renderGuide();
+  </script>
+</body>
+</html>
