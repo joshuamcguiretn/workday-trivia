@@ -6,6 +6,7 @@
   --muted: #5f6b7a;
   --bg: #f6f8fc;
   --card: #ffffff;
+  --line: #dbe4f1;
 }
 
 * { box-sizing: border-box; }
@@ -39,11 +40,16 @@ body {
   font-size: 1.2rem;
 }
 
+.nav-links { display: flex; align-items: center; gap: 20px; }
+
 .nav-link {
   color: white;
   text-decoration: none;
   opacity: 0.9;
+  font-weight: 700;
 }
+
+.nav-link:hover, .text-link:hover { text-decoration: underline; }
 
 .hero-inner {
   max-width: 980px;
@@ -75,14 +81,15 @@ h3 { font-size: 1.4rem; }
 
 .lead {
   font-size: 1.25rem;
-  max-width: 760px;
+  max-width: 800px;
   margin: 0 auto 30px;
   color: rgba(255,255,255,0.88);
 }
 
-.hero-actions {
+.hero-actions, .offer-actions {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   gap: 14px;
 }
@@ -97,6 +104,7 @@ h3 { font-size: 1.4rem; }
 
 .primary { background: var(--gold); color: #172033; }
 .secondary { background: rgba(255,255,255,0.14); color: white; border: 1px solid rgba(255,255,255,0.35); }
+.dark { background: var(--blue); color: white; }
 
 .section {
   max-width: 1100px;
@@ -116,29 +124,46 @@ h3 { font-size: 1.4rem; }
   color: var(--muted);
 }
 
-.cards {
+.cards, .faq-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding-top: 10px;
 }
 
-.card, .offer, .sample {
+.card, .offer, .sample, .faq-grid article {
   background: var(--card);
   border-radius: 24px;
   box-shadow: 0 18px 45px rgba(16, 40, 79, 0.08);
 }
 
-.card {
-  padding: 28px;
-}
-
-.card p, .sample p { color: var(--muted); }
+.card, .faq-grid article { padding: 28px; }
+.card p, .sample p, .faq-grid p { color: var(--muted); }
 
 .offer, .sample {
   margin-top: 30px;
   padding: 46px;
 }
+
+.offer-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.price-box {
+  min-width: 205px;
+  padding: 22px 24px;
+  border-radius: 18px;
+  background: #eff4ff;
+  border: 1px solid #d6e3fb;
+  text-align: right;
+}
+
+.price-label, .price-note { display: block; color: var(--muted); font-size: 0.84rem; font-weight: 700; }
+.price { display: block; color: var(--blue); font-size: 3rem; line-height: 1; letter-spacing: -0.06em; }
+.offer-intro { max-width: 760px; color: var(--muted); font-size: 1.1rem; }
 
 .checklist {
   padding: 0;
@@ -160,6 +185,9 @@ h3 { font-size: 1.4rem; }
   font-weight: 900;
 }
 
+.offer-actions { justify-content: flex-start; margin-top: 30px; }
+.text-link { color: var(--blue); font-weight: 800; text-decoration: none; }
+
 .status-box {
   margin-top: 22px;
   padding: 18px;
@@ -167,6 +195,12 @@ h3 { font-size: 1.4rem; }
   background: #eef3ff;
   border: 1px solid #d7e4ff;
 }
+
+.start-actions { justify-content: flex-start; margin-top: 24px; }
+
+.faq { padding-top: 15px; }
+.faq-grid article { border: 1px solid var(--line); box-shadow: none; }
+.faq-grid h3 { font-size: 1.18rem; }
 
 footer {
   text-align: center;
@@ -177,7 +211,9 @@ footer {
 @media (max-width: 760px) {
   .nav, .problem { grid-template-columns: 1fr; display: block; }
   .nav { text-align: center; }
-  .nav-link { display: block; margin-top: 10px; }
-  .cards { grid-template-columns: 1fr; }
+  .nav-links { justify-content: center; margin-top: 10px; flex-wrap: wrap; }
+  .cards, .faq-grid { grid-template-columns: 1fr; }
   .offer, .sample { padding: 30px 22px; }
+  .offer-heading { display: block; }
+  .price-box { margin-top: 24px; text-align: left; }
 }
