@@ -1,0 +1,1 @@
+window.JUBILEE_FAKE_DATA={consumer:'Maria Thompson',accountId:'JUB-FAKE-1027',originalCreditor:'Example Community Bank',currentBalance:'$4,820.00',acquisitionCost:'$289.20',suggestedVoluntary:'$25.00',releaseDeadline:'No later than Dec. 31, 2032',status:'Build Demo / Fake Data Only'};
